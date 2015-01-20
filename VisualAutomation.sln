@@ -1,0 +1,68 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VisualAutomation", "VisualAutomation\VisualAutomation.vcxproj", "{260959C5-ADD4-45B7-8DDA-D4B676109FCD}"
+EndProject
+Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "VisualAutomationSetup", "VisualAutomationSetup\VisualAutomationSetup.isproj", "{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CD_ROM|Win32 = CD_ROM|Win32
+		CD_ROM|x64 = CD_ROM|x64
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		DVD-5|Win32 = DVD-5|Win32
+		DVD-5|x64 = DVD-5|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		SingleImage|Win32 = SingleImage|Win32
+		SingleImage|x64 = SingleImage|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.CD_ROM|Win32.ActiveCfg = Release|Win32
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.CD_ROM|Win32.Build.0 = Release|Win32
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.CD_ROM|x64.ActiveCfg = Release|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.CD_ROM|x64.Build.0 = Release|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.Debug|Win32.Build.0 = Debug|Win32
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.Debug|x64.ActiveCfg = Debug|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.Debug|x64.Build.0 = Debug|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.DVD-5|Win32.ActiveCfg = Debug|Win32
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.DVD-5|Win32.Build.0 = Debug|Win32
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.DVD-5|x64.ActiveCfg = Debug|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.DVD-5|x64.Build.0 = Debug|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.Release|Win32.ActiveCfg = Release|Win32
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.Release|Win32.Build.0 = Release|Win32
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.Release|x64.ActiveCfg = Release|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.Release|x64.Build.0 = Release|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.SingleImage|Win32.ActiveCfg = Release|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.SingleImage|Win32.Build.0 = Release|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.SingleImage|x64.ActiveCfg = Release|x64
+		{260959C5-ADD4-45B7-8DDA-D4B676109FCD}.SingleImage|x64.Build.0 = Release|x64
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.CD_ROM|Win32.ActiveCfg = CD_ROM
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.CD_ROM|Win32.Build.0 = CD_ROM
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.CD_ROM|x64.ActiveCfg = CD_ROM
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.CD_ROM|x64.Build.0 = CD_ROM
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.Debug|Win32.ActiveCfg = DVD-5
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.Debug|Win32.Build.0 = DVD-5
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.Debug|x64.ActiveCfg = DVD-5
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.Debug|x64.Build.0 = DVD-5
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.DVD-5|Win32.ActiveCfg = DVD-5
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.DVD-5|Win32.Build.0 = DVD-5
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.DVD-5|x64.ActiveCfg = DVD-5
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.DVD-5|x64.Build.0 = DVD-5
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.Release|Win32.ActiveCfg = SingleImage
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.Release|Win32.Build.0 = SingleImage
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.Release|x64.ActiveCfg = SingleImage
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.Release|x64.Build.0 = SingleImage
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.SingleImage|Win32.ActiveCfg = SingleImage
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.SingleImage|Win32.Build.0 = SingleImage
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.SingleImage|x64.ActiveCfg = SingleImage
+		{174FE88A-3CF6-4EF5-AAF0-D9DF2060BC55}.SingleImage|x64.Build.0 = SingleImage
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
