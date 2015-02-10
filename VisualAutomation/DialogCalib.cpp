@@ -55,9 +55,9 @@ void DialogCalib::DoDataExchange(CDataExchange* pDX)
 	sliderExp.SetRange(0, 100, TRUE);
 	sliderZoom.SetRange(0, 100, TRUE);
 	sliderThreshold.SetRange(0, 255, TRUE);
-	
 
-	sliderExp.SetPos((Constants::getInstance()->getExposure()*100)/ Camera::getInstance()->m_MaxExposure);
+
+	sliderExp.SetPos((Constants::getInstance()->getExposure() * 100) / Camera::getInstance()->m_MaxExposure);
 	Detection::getInstance()->setThresholdValue(Constants::getInstance()->getThresholdVal());
 	if (Constants::getInstance()->getTypeThresh() == 1)
 	{
@@ -70,7 +70,7 @@ void DialogCalib::DoDataExchange(CDataExchange* pDX)
 	if (Constants::getInstance()->getHasThreshold())
 	{
 		useThreshCheckl.SetCheck(1);
-		Detection::getInstance()->useThreshold = true  ;
+		Detection::getInstance()->useThreshold = true;
 	}
 	sliderThreshold.SetPos(Constants::getInstance()->getThresholdVal());
 
@@ -84,6 +84,10 @@ void DialogCalib::DoDataExchange(CDataExchange* pDX)
 	//  DDX_Check(pDX, IDC_CHECK1, checkAdaptive);
 	//  DDV_MinMaxInt(pDX, checkAdaptive, 0, 1);
 
+	DDX_Control(pDX, IDC_CHECK3, findPoints);
+	DDX_Control(pDX, IDC_EDIT3, calibMMInput);
+	DDX_Control(pDX, IDC_BUTTON_CALIBRATE, buttonCalibrate);
+	DDX_Control(pDX, IDC_BUTTON_SET_POSITION, buttonSetPos);
 }
 
 
@@ -105,6 +109,7 @@ BEGIN_MESSAGE_MAP(DialogCalib, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &DialogCalib::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON_CALIBRATE, &DialogCalib::OnBnClickedButtonCalibrate)
 	ON_BN_CLICKED(IDC_BUTTON_SET_POSITION, &DialogCalib::OnBnClickedButtonSetPosition)
+	ON_BN_CLICKED(IDC_CHECK3, &DialogCalib::OnBnClickedCheck3)
 END_MESSAGE_MAP()
 
 
@@ -115,6 +120,7 @@ void DialogCalib::OnBnClickedOk()
 {
 	// TODO: Add your control notification handler code here
 	Detection::getInstance()->destroyWnd();
+	Detection::getInstance()->findPoints = false;
 	Sleep(50);
 	XMLLoader::getInstance()->saveXML();
 	CDialogEx::OnOK();
@@ -125,6 +131,7 @@ void DialogCalib::OnBnClickedCancel()
 {
 	// TODO: Add your control notification handler code here
 	Detection::getInstance()->destroyWnd();
+	Detection::getInstance()->findPoints = false;
 	Sleep(50);
 	CDialogEx::OnCancel();
 }
@@ -313,6 +320,11 @@ void DialogCalib::OnBnClickedButton1()
 
 void DialogCalib::OnBnClickedButtonCalibrate()
 {
+	CString dist;
+	calibMMInput.GetWindowTextW(dist);
+	int d = _wtoi(dist);
+	Constants::getInstance()->setCalibMM(d);
+
 	if(Detection::getInstance()->calibrateMM()==1)
 		AfxMessageBox(_T("CALIBRATED"), MB_OK | MB_ICONINFORMATION);
 	else
@@ -323,4 +335,26 @@ void DialogCalib::OnBnClickedButtonCalibrate()
 void DialogCalib::OnBnClickedButtonSetPosition()
 {
 	// TODO: Add your control notification handler code here
+}
+
+
+void DialogCalib::OnBnClickedCheck3()
+{
+	
+	CString str;
+	str.Format(_T("val: %d"), findPoints.GetCheck());
+	if (findPoints.GetCheck() == 1)
+	{
+		calibMMInput.EnableWindow(true);
+		buttonSetPos.EnableWindow(true);
+		buttonCalibrate.EnableWindow(true);
+		Detection::getInstance()->findPoints = true;
+	}
+	else
+	{
+		buttonCalibrate.EnableWindow(false);
+		calibMMInput.EnableWindow(false);
+		buttonSetPos.EnableWindow(false);
+		Detection::getInstance()->findPoints = false;
+	}
 }

@@ -11,6 +11,7 @@
 #include "DialogCalib.h"
 #include "Detection.h"
 #include "DialogVision.h"
+#include <iostream>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -87,7 +88,7 @@ BEGIN_MESSAGE_MAP(CVisualAutomationDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CVisualAutomationDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDOK, &CVisualAutomationDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDOK, &CVisualAutomationDlg::OnBnClickedOk)	
 	ON_BN_CLICKED(IDC_BUTTON2, &CVisualAutomationDlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, &CVisualAutomationDlg::OnBnClickedButton3)
 	ON_BN_CLICKED(IDCANCEL, &CVisualAutomationDlg::OnBnClickedCancel)
@@ -103,6 +104,9 @@ END_MESSAGE_MAP()
 BOOL CVisualAutomationDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
+	if (!AllocConsole())
+		AfxMessageBox(_T("Failed to create the console!"), MB_ICONEXCLAMATION);
 
 	// Add "About..." menu item to system menu.
 
@@ -123,6 +127,10 @@ BOOL CVisualAutomationDlg::OnInitDialog()
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 	}
+
+	_cwprintf(_T("***************************************************************************\n"));
+	_cwprintf(_T("****** VISUAL AUTOMATION DEBUG                          BY TARAMBOLA ******\n"));
+	_cwprintf(_T("***************************************************************************\n"));
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog

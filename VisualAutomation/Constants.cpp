@@ -23,7 +23,10 @@ Constants* Constants::getInstance(){
 	else
 		return(single);
 }
-
+void Constants::setCalibMM(int val)
+{
+	this->calibMM = val;
+}
 void Constants::setBlur(int val){
 	this->blur = val;
 }
@@ -87,7 +90,10 @@ int Constants::getBlur()
 {
 	return this->blur;
 }
-
+int Constants::getCalibMM()
+{
+	return(this->calibMM);
+}
 
 int Constants::getCanny()
 {

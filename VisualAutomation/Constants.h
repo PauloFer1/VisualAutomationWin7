@@ -29,6 +29,7 @@ private:
 	int initialX;
 	int initialY;
 	int initialRot;
+	int calibMM = 630;
 public:
 	void setBlur(int val);
 	void setCanny(int val);
@@ -47,6 +48,7 @@ public:
 	void setInitialRot(int rot);
 	void connectMachine();
 	void disconnectMachine();
+	void setCalibMM(int val);
 	int getBlur();
 	int getCanny();
 	int getConstrast();
@@ -62,6 +64,7 @@ public:
 	int actHorDist;
 	int actVerDist;
 	int getHasThresholdInt();
+	int getCalibMM();
 	bool checkConnection();
 	int getInitialX();
 	int getInitialY();

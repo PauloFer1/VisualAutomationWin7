@@ -65,4 +65,9 @@ public:
 	afx_msg void OnBnClickedButtonCalibrate();
 	void renderVision();
 	afx_msg void OnBnClickedButtonSetPosition();
+	afx_msg void OnBnClickedCheck3();
+	CButton findPoints;
+	CEdit calibMMInput;
+	CButton buttonCalibrate;
+	CButton buttonSetPos;
 };

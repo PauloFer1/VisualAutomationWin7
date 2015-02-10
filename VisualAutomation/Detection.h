@@ -3,6 +3,7 @@
 #include "opencv2\highgui\highgui.hpp"
 #include "opencv2\imgproc\imgproc.hpp"
 #include "Constants.h"
+#include "opencv2\features2d\features2d.hpp"
 
 using namespace cv;
 using namespace std;
@@ -21,6 +22,7 @@ public:
 	void destroyWnd();
 	static void __cdecl render(void * parg);
 	int flag;
+	bool findPoints = false;
 public:
 	bool isRender;
 	VideoCapture cap;
@@ -84,5 +86,7 @@ private:
 	vector<Point2i> sample;
 	int sampleSize = 6;
 	Point2i travelLine(Mat src, int px, int posL, int lLimit, int direction);
+	int detectCalibPoints(Mat src);
+	int pointDistance;
 };
 

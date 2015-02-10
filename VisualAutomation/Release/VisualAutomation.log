@@ -1,7 +1,7 @@
-﻿Build started 20-01-2015 22:03:14.
+﻿Build started 10-02-2015 14:42:33.
      1>Project "C:\Users\Utilizador\Documents\Visual Studio 2013\Projects\VisualAutomation\VisualAutomation\VisualAutomation.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files\IDS\uEye\Develop\include" /IC:\opencv249\build\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\VisualAutomation.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Detection.cpp DialogCalib.cpp DialogVision.cpp VisualAutomationDlg.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files\IDS\uEye\Develop\include" /IC:\opencv249\build\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\VisualAutomation.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Detection.cpp
          Detection.cpp
      1>Detection.cpp(196): warning C4101: 'rowL' : unreferenced local variable
      1>Detection.cpp(196): warning C4101: 'col2L' : unreferenced local variable
@@ -10,23 +10,18 @@
      1>Detection.cpp(196): warning C4101: 'rowR' : unreferenced local variable
      1>Detection.cpp(196): warning C4101: 'colL' : unreferenced local variable
      1>Detection.cpp(196): warning C4101: 'rowM' : unreferenced local variable
-     1>Detection.cpp(489): warning C4018: '<' : signed/unsigned mismatch
-     1>Detection.cpp(497): warning C4018: '<' : signed/unsigned mismatch
-     1>Detection.cpp(523): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>Detection.cpp(537): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>Detection.cpp(541): warning C4018: '<' : signed/unsigned mismatch
-     1>Detection.cpp(644): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>Detection.cpp(650): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-         DialogCalib.cpp
-     1>DialogCalib.cpp(60): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>DialogCalib.cpp(65): warning C4553: '==' : operator has no effect; did you intend '='?
-     1>DialogCalib.cpp(68): warning C4553: '==' : operator has no effect; did you intend '='?
-         DialogVision.cpp
-     1>DialogVision.cpp(42): warning C4101: 'logFont' : unreferenced local variable
-     1>DialogVision.cpp(102): warning C4800: 'LPVARIANT' : forcing value to bool 'true' or 'false' (performance warning)
-     1>DialogVision.cpp(108): warning C4551: function call missing argument list
-     1>DialogVision.cpp(114): warning C4800: 'LPVARIANT' : forcing value to bool 'true' or 'false' (performance warning)
-         VisualAutomationDlg.cpp
+     1>Detection.cpp(238): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Detection.cpp(239): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Detection.cpp(267): warning C4018: '<' : signed/unsigned mismatch
+     1>Detection.cpp(334): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>Detection.cpp(338): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Detection.cpp(580): warning C4018: '<' : signed/unsigned mismatch
+     1>Detection.cpp(588): warning C4018: '<' : signed/unsigned mismatch
+     1>Detection.cpp(614): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Detection.cpp(628): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Detection.cpp(632): warning C4018: '<' : signed/unsigned mismatch
+     1>Detection.cpp(735): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Detection.cpp(741): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Utilizador\Documents\Visual Studio 2013\Projects\VisualAutomation\Release\VisualAutomation.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Program Files\IDS\uEye\Develop\Lib" /LIBPATH:C:\opencv249\build\x86\vc12\lib ueye_api.lib opencv_calib3d249.lib opencv_contrib249.lib opencv_core249.lib opencv_features2d249.lib opencv_flann249.lib opencv_gpu249.lib opencv_highgui249.lib opencv_imgproc249.lib opencv_legacy249.lib opencv_ml249.lib opencv_nonfree249.lib opencv_objdetect249.lib opencv_ocl249.lib opencv_photo249.lib opencv_stitching249.lib opencv_superres249.lib opencv_ts249.lib opencv_video249.lib opencv_videostab249.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"C:\Users\Utilizador\Documents\Visual Studio 2013\Projects\VisualAutomation\Release\VisualAutomation.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Utilizador\Documents\Visual Studio 2013\Projects\VisualAutomation\Release\VisualAutomation.lib" /MACHINE:X86 /SAFESEH Release\VisualAutomation.res
          Release\Camera.obj
@@ -52,4 +47,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:08.26
+Time Elapsed 00:00:07.56

@@ -215,6 +215,131 @@ int Detection::processImage()
 	
 	return(1);
 }
+struct Node
+{
+	int key;
+	int x;
+	int y;
+	struct Node *left;
+	struct Node *right;
+};
+Node* newNode(int key, int x, int y){
+	Node *n = new Node;
+	n->x = x;
+	n->y = y;
+	n->key = key;
+	n->left = n->right = NULL;
+
+	return n;
+}
+float getDistance(Point a, Point b)
+{
+	float d = 0.0;
+	float dx = (a.x - b.x)*(a.x - b.x);
+	float dy = (a.y - b.y)*(a.y - b.y);
+	d = sqrt(dx + dy);
+
+	return d;
+}
+int Detection::detectCalibPoints(Mat src)
+{
+	Node *root = newNode(-1, 0, 0);
+	Node *left = newNode(-2, 0, 0);
+	Node *right = newNode(0, 0, 0);
+
+	SimpleBlobDetector::Params params;
+	params.minDistBetweenBlobs = 100.0f;
+	params.filterByInertia = false;
+	params.filterByConvexity = false;
+	params.filterByColor = false;
+	params.filterByCircularity = false;
+	params.filterByArea = true;
+	params.minArea = 1.0f;
+	params.maxArea = 20.0f;
+
+	SimpleBlobDetector blobDet(params);
+
+	vector<KeyPoint> blobs;
+	blobDet.detect(src, blobs);
+
+	if (blobs.size()==4)
+	{ 
+		for (int i = 0; i < blobs.size(); i++)
+		{
+			char c[2];
+			sprintf_s(c, "%d", i + 1);
+
+			//circle(this->src, Point((int)blobs[i].pt.x, (int)blobs[i].pt.y), (int)blobs[i].size * 4, Scalar(0, 0, 255));
+			//putText(this->src, c, Point((int)blobs[i].pt.x + 15, (int)blobs[i].pt.y + 15), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(0, 0, 255), 1, CV_AA);
+
+			if ((int)blobs[i].pt.y < (src.rows / 2) && root->left == NULL)
+				root->left = newNode(1, (int)blobs[i].pt.x, (int)blobs[i].pt.y);
+			else if ((int)blobs[i].pt.y < (src.rows / 2) && root->left != NULL){
+				if (root->left->x < (int)blobs[i].pt.x){
+					Node *temp = root->left;
+					root->left = left;
+					root->left->left = temp;
+					root->left->right = newNode(2, (int)blobs[i].pt.x, (int)blobs[i].pt.y);
+				}
+				else{
+					Node *temp = root->left;
+					root->left = left;
+					root->left->left = newNode(1, (int)blobs[i].pt.x, (int)blobs[i].pt.y);
+					root->left->right = temp;
+					root->left->right->key = 2;
+				}
+			}
+			else if ((int)blobs[i].pt.y > (src.rows / 2) && root->right == NULL)
+				root->right = newNode(3, (int)blobs[i].pt.x, (int)blobs[i].pt.y);
+			else if ((int)blobs[i].pt.y > (src.rows / 2) && root->right != NULL){
+				if (root->right->x < (int)blobs[i].pt.x){
+					Node *temp = root->right;
+					root->right = right;
+					root->right->left = temp;
+					root->right->right = newNode(4, (int)blobs[i].pt.x, (int)blobs[i].pt.y);
+				}
+				else{
+					Node *temp = root->right;
+					root->right = right;
+					root->right->left = newNode(3, (int)blobs[i].pt.x, (int)blobs[i].pt.y);
+					root->right->right = temp;
+					root->right->right->key = 4;
+				}
+			}
+		}
+			char c[10];
+
+			sprintf_s(c, "%d", root->left->left->key );
+			circle(this->src, Point(root->left->left->x, root->left->left->y), 10, Scalar(0, 0, 255));
+			putText(this->src, c, Point(root->left->left->x+15, root->left->left->y+15), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(0, 0, 255), 1, CV_AA);
+
+			sprintf_s(c, "%d", root->left->right->key);
+			circle(this->src, Point(root->left->right->x, root->left->right->y), 10, Scalar(0, 0, 255));
+			putText(this->src, c, Point(root->left->right->x + 15, root->left->right->y + 15), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(0, 0, 255), 1, CV_AA);
+
+			sprintf_s(c, "%d", root->right->left->key);
+			circle(this->src, Point(root->right->left->x, root->right->left->y), 10, Scalar(0, 0, 255));
+			putText(this->src, c, Point(root->right->left->x + 15, root->right->left->y + 15), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(0, 0, 255), 1, CV_AA);
+
+			sprintf_s(c, "%d", root->right->right->key);
+			circle(this->src, Point(root->right->right->x, root->right->right->y), 10, Scalar(0, 0, 255));
+			putText(this->src, c, Point(root->right->right->x + 15, root->right->right->y + 15), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(0, 0, 255), 1, CV_AA);
+
+			line(this->src, Point(root->left->left->x, root->left->left->y), Point(root->left->right->x, root->left->right->y), Scalar(0, 255, 255));
+			line(this->src, Point(root->left->right->x, root->left->right->y), Point(root->right->right->x, root->right->right->y), Scalar(0, 255, 255));
+			line(this->src, Point(root->right->right->x, root->right->right->y), Point(root->right->left->x, root->right->left->y), Scalar(0, 255, 255));
+			line(this->src, Point(root->right->left->x, root->right->left->y), Point(root->left->left->x, root->left->left->y), Scalar(0, 255, 255));
+
+			float dist = getDistance(Point(root->left->left->x, root->left->left->y), Point(root->left->right->x, root->left->right->y));
+			this->pointDistance = dist;
+			int d = (int)dist;
+			sprintf_s(c, "%d", d);
+
+			putText(this->src, c, Point((root->left->left->x + dist / 2), root->left->left->y - 5), FONT_HERSHEY_COMPLEX_SMALL, 1, Scalar(0, 0, 255), 1, CV_AA);
+	}
+		//_cwprintf(_T("pos:(%d,%d)\n"), (int)blobs[i].pt.x, (int)blobs[i].pt.y);
+	return(1);
+}
 Point2i Detection::travelLine(Mat src, int px, int posL, int lLimit, int direction)
 {
 	if (direction == 0)
@@ -289,13 +414,21 @@ Point2i Detection::travelLine(Mat src, int px, int posL, int lLimit, int directi
 }
 int Detection::travelPixels(Mat src)
 {
+
+	if (this->findPoints)
+		detectCalibPoints(src);
+
 	int pxYL=1;
 	int pxYR=1;
+	int pxYLB = 1;
+	int pxYRB = 1;
 	int posL = 1;
 	int posR = 1;
+	int posLB = 1;
+	int posRB = 1;
 	int posB = 1;
 	int posT = 1;
-	//***** FIND HORIZONTAL LINE
+	//***** FIND HORIZONTAL UP LINE
 	for (int i = (src.rows/2)+20; i > 0; i--)
 	{
 		if ((int)src.at<uchar>(i, (src.cols/2)+30) > 0)
@@ -308,79 +441,36 @@ int Detection::travelPixels(Mat src)
 			break;
 		}
 	}
+	//***** FIND HORIZONTAL BOTTOM LINE
+	for (int i = (src.rows / 2) - 20; i < src.rows; i++)
+	{
+		if ((int)src.at<uchar>(i, (src.cols / 2) + 30) > 0)
+		{
+			Point m1 = Point(imgWidth / 2 - 20, i);
+			Point m2 = Point(imgWidth / 2 + 20, i);
+			line(this->src, m1, m2, Scalar(0, 0, 255), 1, CV_AA);
+			pxYLB = i;
+			pxYRB = i;
+			break;
+		}
+	}
 	int lLimit = this->src.cols/2 - this->mmToPixels(Constants::getInstance()->getObjWidth()) / 4;
 	int rLimit = this->src.cols/2 + this->mmToPixels(Constants::getInstance()->getObjWidth()) / 4;
 	//***** TRAVEL LATERAL PIXELS AND FIND A GAP
-/*	for (int i = src.cols / 2; i > 0; i--)
-	{
-		if ((int)src.at<uchar>(pxYL, i) == 0 && pxYL>0 && pxYL<src.rows){
-			pxYL++;
-			if ((int)src.at<uchar>(pxYL, i) == 0 && pxYL>0 && pxYL<src.rows){
-				pxYL ++;
-				if ((int)src.at<uchar>(pxYL, i) == 0 && pxYL>0 && pxYL<src.rows){
-					pxYL ++;
-					if ((int)src.at<uchar>(pxYL, i) == 0 && pxYL>0 && pxYL < src.rows){
-						pxYL -= 4;
-						if ((int)src.at<uchar>(pxYL, i) == 0 && pxYL>0 && pxYL < src.rows){
-							pxYL--;
-							if ((int)src.at<uchar>(pxYL, i) == 0 && pxYL>0 && pxYL < src.rows){
-								pxYL--;
-								if ((int)src.at<uchar>(pxYL, i) == 0 && pxYL>0 && pxYL < src.rows){// && i < lLimit){
-									Point m3 = Point(i, pxYL - 20);
-									Point m4 = Point(i, pxYL + 20);
-									posL = i;
-									line(this->src, m3, m4, Scalar(0, 0, 255), 1, CV_AA);
-									break;
-								}
-								else if (i > lLimit)
-									pxYL += 3;
-							}
-						}
-					}
-				}
-			}
-		}
-			
-	}
-	*/
+	//***** UP
 	Point2i l = travelLine(src, pxYL, posL, lLimit, 0);
-	Point2i r = travelLine(src, pxYL, posL, lLimit, 1);
+	Point2i r = travelLine(src, pxYR, posR, rLimit, 1);
 	pxYL = l.x;
 	pxYR = r.x;
 	posL = l.y;
 	posR = r.y;
-	/*
-	for (int i = src.cols / 2; i < src.cols; i++)
-	{
-		if ((int)src.at<uchar>(pxYR, i) == 0 && pxYR>0 && pxYR<src.rows){
-			pxYR++;
-			if ((int)src.at<uchar>(pxYR, i) == 0 && pxYR>0 && pxYR<src.rows){
-				pxYR ++;
-				if ((int)src.at<uchar>(pxYR, i) == 0 && pxYR>0 && pxYR<src.rows){
-					pxYR ++;
-					if ((int)src.at<uchar>(pxYR, i) == 0 && pxYR>0 && pxYR < src.rows){
-						pxYR -= 4;
-						if ((int)src.at<uchar>(pxYR, i) == 0 && pxYR>0 && pxYR < src.rows){
-							pxYR--;
-							if ((int)src.at<uchar>(pxYR, i) == 0 && pxYR>0 && pxYR < src.rows){
-								pxYR--;
-								if ((int)src.at<uchar>(pxYR, i) == 0 && pxYR>0 && pxYR<src.rows){// && i > rLimit){
-									Point m3 = Point(i, pxYR - 20);
-									Point m4 = Point(i, pxYR + 20);
-									posR = i;
-									line(this->src, m3, m4, Scalar(0, 0, 255), 1, CV_AA);
-									break;
-								}
-								else if (i < rLimit)
-									pxYR += 3;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	*/
+	//***** BOTTOM
+	Point2i lB = travelLine(src, pxYLB, posLB, lLimit, 0);
+	Point2i rB = travelLine(src, pxYRB, posRB, rLimit, 1);
+	pxYLB = lB.x;
+	pxYRB = rB.x;
+	posLB = lB.y;
+	posRB = rB.y;
 	Constants::getInstance()->actHorDist = (pxYR - pxYL);
 	//***** FIND VERTICAL LINE
 	int pyYT = 1;
@@ -460,7 +550,8 @@ int Detection::travelPixels(Mat src)
 }
 int Detection::calibrateMM()
 {
-	this->calibValue = Constants::getInstance()->actHorDist;
+	//this->calibValue = Constants::getInstance()->actHorDist;
+	this->calibValue = this->pointDistance;
 	Constants::getInstance()->setCalibVal(this->calibValue);
 	if (this->calibValue < 1)
 		return -1;
@@ -472,7 +563,7 @@ int Detection::pixelsToMm(int px)
 	{
 		return(0);
 	}
-	int x = (210 * px) / this->calibValue;
+	int x = (Constants::getInstance()->getCalibMM() * px) / this->calibValue;
 	return(x);
 }
 int Detection::mmToPixels(int mm)
@@ -481,7 +572,7 @@ int Detection::mmToPixels(int mm)
 	{
 		return(0);
 	}
-	int x = (mm*this->calibValue) / 210;
+	int x = (mm*this->calibValue) / Constants::getInstance()->getCalibMM();
 	return(x);
 }
 Point2i Detection::getOffset()
